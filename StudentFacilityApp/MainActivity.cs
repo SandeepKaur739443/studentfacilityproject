@@ -47,15 +47,12 @@ namespace StudentFacilityApp
             {
                 Intent newScreen = new Intent(this, typeof(SignUp));
                 StartActivity(newScreen);
-
-
-            };
+           };
             
             myLoginbtn.Click += delegate
             {
                 var myName = myUserName.Text;
                 var myPassword = myUserPasswd.Text;
-
 
                 string userValue = myUserName.Text.ToString();
                 var showResult = FindViewById<TextView>(Resource.Id.emailResult);
@@ -65,6 +62,7 @@ namespace StudentFacilityApp
                 System.Console.WriteLine("Password: ---- > " + myPassword);
                 // System.Console.WriteLine("Age: ---- > " + myage);
                 myUserName.Error = "Plase enter Email Id";
+
                 if (myName.Trim().Equals("") || myName.Length < 0)
                 {
 
@@ -100,8 +98,11 @@ namespace StudentFacilityApp
 
                     else
                     {
-
+                        
                         myDB.SelectMydata();
+                        Intent newScreen = new Intent(this, typeof(WelcomeScreen));
+                        newScreen.PutExtra("userName", myName);
+                        StartActivity(newScreen);
 
                     }
 
@@ -109,7 +110,7 @@ namespace StudentFacilityApp
 
             };
         }
-
+        
         private void alertOKButton(object sender, DialogClickEventArgs e)
         {
             throw new NotImplementedException();
@@ -119,8 +120,9 @@ namespace StudentFacilityApp
         {
             return Android.Util.Patterns.EmailAddress.Matcher(email).Matches();
         }
+       
 
-        
+
     }
 
        
