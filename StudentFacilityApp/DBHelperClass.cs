@@ -26,7 +26,9 @@ namespace StudentFacilityApp
         public static string email = "email";
         public static string contact = "contact";
         public static string pass = "password";
-       
+
+        public static string test = "password";
+
 
         //create database
         public string creatTable = "Create Table " + tableName + "(" + userId + " int, "+ nameFiled + " Text, " + email + " Text, " +
