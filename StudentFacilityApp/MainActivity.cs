@@ -6,7 +6,7 @@ using Android.Widget;
 using System;
 using Android.Views;
 using Android.Content;
-
+using Android.Database;
 
 namespace StudentFacilityApp
 {
@@ -22,6 +22,9 @@ namespace StudentFacilityApp
 
         Android.App.AlertDialog.Builder alert;
         DBHelperClass myDB;
+        ICursor c_login;
+        private readonly object myUser;
+        private readonly object mypswd;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,10 +39,8 @@ namespace StudentFacilityApp
             myLoginbtn = FindViewById<Button>(Resource.Id.loginBtn);
             mySignupBtn = FindViewById<Button>(Resource.Id.button1);
 
-
             alert = new Android.App.AlertDialog.Builder(this);
             myDB = new DBHelperClass(this);
-
 
             //fatching information from signup page
 
@@ -48,9 +49,9 @@ namespace StudentFacilityApp
                 Intent newScreen = new Intent(this, typeof(SignUp));
                 StartActivity(newScreen);
            };
-            
             myLoginbtn.Click += delegate
             {
+                
                 var myName = myUserName.Text;
                 var myPassword = myUserPasswd.Text;
 
@@ -60,55 +61,48 @@ namespace StudentFacilityApp
 
                 System.Console.WriteLine("Username: ---- > " + myName);
                 System.Console.WriteLine("Password: ---- > " + myPassword);
-                // System.Console.WriteLine("Age: ---- > " + myage);
+
                 myUserName.Error = "Plase enter Email Id";
 
-                if (myName.Trim().Equals("") || myName.Length < 0)
+                c_login = myDB.Validate_LogIn(myUserName.Text);
+                c_login.MoveToFirst();
+                if (c_login==null)
                 {
-
-                    /* alert.SetTitle("Error");
-                    alert.SetMessage("Please Enter Valid Data");
-                    alert.SetPositiveButton("OK", alertOKButton);
-                    alert.SetNegativeButton("Cancel", alertOKButton);
-                    Dialog myDialog = alert.Create();
-                    myDialog.Show(); */
-                    //showResult.Text = "Please enter Email Id";
-                   
+                   // var showResu = FindViewById<TextView>(Resource.Id.emailResult);
+                alert.SetTitle("Error");
+                alert.SetMessage("Please Enter Valid Data");
+                alert.SetPositiveButton("OK", alertOKButton);
+                alert.SetNegativeButton("Cancel", alertOKButton);
+                Dialog myDialog = alert.Create();
+                myDialog.Show();
+                //showResult.Text = "Please enter Email Id";
+                
                 }
                 else
                 {
-                    if (emailLoginResult == true)
-                    {
-                        showResult.Text = "Great...Email id is valid";
-                    }
+                    
+                    var uname = c_login.GetString(c_login.GetColumnIndexOrThrow("email"));
+                    var upass = c_login.GetString(c_login.GetColumnIndexOrThrow("password"));
+                    if (myUserPasswd.Text == upass)
 
-                    else
                     {
-                        myUserName.Error = "Wrong Email Id";
-                    }
-
-                    //string userPasswordValue = myUserPasswd.Text.ToString();
-                    var showpasswdResult = FindViewById<TextView>(Resource.Id.passwordResult);
-                   
-
-                    if (myPassword.Trim().Equals("") || myPassword.Length < 0)
-                    {
-                        showpasswdResult.Text = "Please enetr Password";
-                    }
-
-                    else
-                    {
-                        
-                        myDB.SelectMydata();
+                        //myDB.SelectMydata();
                         Intent newScreen = new Intent(this, typeof(WelcomeScreen));
                         newScreen.PutExtra("userName", myName);
                         StartActivity(newScreen);
-
                     }
 
-                }
+                    else
+                    {
+                        var showpasswdResult = FindViewById<TextView>(Resource.Id.passwordResult);
 
-            };
+                        showpasswdResult.Text = "Please enetr Password";
+
+                    }
+                }
+               
+
+                };
         }
         
         private void alertOKButton(object sender, DialogClickEventArgs e)
@@ -121,9 +115,6 @@ namespace StudentFacilityApp
             return Android.Util.Patterns.EmailAddress.Matcher(email).Matches();
         }
        
-
-
     }
 
-       
     }
