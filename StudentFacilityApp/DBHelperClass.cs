@@ -27,7 +27,7 @@ namespace StudentFacilityApp
         public static string contact = "contact";
         public static string pass = "password";
 
-        public static string test = "password";
+        
 
 
         //create database
@@ -63,8 +63,7 @@ namespace StudentFacilityApp
             connectionObj.ExecSQL(insertStm);
 
         }
-
-        //show data on screen
+ //show data on screen
         public void SelectMydata()
         {
             String selectStm = "Select * from " + tableName;
@@ -107,7 +106,13 @@ namespace StudentFacilityApp
             ICursor myresut = connectionObj.RawQuery(selectStm, null);
             return myresut;
         }
+        public ICursor Validate_LogIn(string email)
+        {
+            String selectStm = "Select * from " + tableName + " where email='" + email + "';"; 
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
 
+            return myresut;
+        }
         public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
             throw new NotImplementedException();
