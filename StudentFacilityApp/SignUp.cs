@@ -83,7 +83,9 @@ namespace StudentFacilityApp
                     myDB.SelectMydata();
 
                     Intent newScreen = new Intent(this, typeof(MainActivity));
+                    newScreen.PutExtra("userName", reg_username.Text);
                     StartActivity(newScreen);
+
 
                 }
 

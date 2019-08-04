@@ -72,7 +72,8 @@ namespace StudentFacilityApp
             if (value.Equals("Complaint Box"))
             {
                 //create a veg array and create as a new adater 
-                Android.Content.Intent newScreen = new Intent(this, typeof(WelcomeScreen));
+                Android.Content.Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                newScreen.PutExtra("email", valueFromLoginUser);
                 StartActivity(newScreen);
             }
             else if (value.Equals("Lost & Found"))

@@ -26,21 +26,28 @@ namespace StudentFacilityApp
         public static string email = "email";
         public static string contact = "contact";
         public static string pass = "password";
+
         
         //complain table
         public static string tableComplain = "ComplainTable";
         public static string complain_id = "c_id";
         public static string complain = "complaint";
+        public static string comp_Date = "Complaint_date";
+
+        
+
+
 
         //create database
         public string creatTable = "Create Table " + tableName + "(" + userId + " int, "+ nameFiled + " Text, " + email + " Text, " +
         contact + " Text, " + pass + " Text);";
 
-        public string createTable = "Create Table " + tableComplain + "(" + complain_id + " int, " + complain + " Text);";
+        public string createTable = "Create Table " + tableComplain + "(" + complain_id + " int, " + complain + " Text," +email+ " Text," +comp_Date+ "Text);";
 
 
         SQLiteDatabase connectionObj;
 
+       
         public DBHelperClass(Context context) : base(context, name: DBName, factory: null, version: 1)
         {
             myContex = context;
@@ -52,7 +59,10 @@ namespace StudentFacilityApp
             System.Console.WriteLine("My Create Table STM \n \n" + creatTable);
 
             db.ExecSQL(creatTable);
+            db.ExecSQL(createTable);
         }
+
+       
 
         //insert data in database
         public void InsertValue(string value_id, string value_username, string value_email, string value_contact, string value_pass)
@@ -69,6 +79,17 @@ namespace StudentFacilityApp
 
         }
 
+        //insert complaint
+        public void InsertmyComplaint(string myid, string myComplaint, string user_email, string dt)
+        {
+            string insertStm = "Insert into " +
+           tableComplain + " values (" + myid + ", '" + myComplaint + "'" + "," + "'" + user_email + "'" + "," + "'" + dt + "'); ";
+            Console.WriteLine(insertStm);
+
+            System.Console.WriteLine("My SQL  Insert STM \n  \n" + insertStm);
+
+            connectionObj.ExecSQL(insertStm);
+        }
         //show data on screen
         public void SelectMydata()
         {
@@ -99,18 +120,50 @@ namespace StudentFacilityApp
 
                 var Password = myresut.GetString(myresut.GetColumnIndexOrThrow(pass));
                 System.Console.WriteLine("password from BD " + Password);
-
-               
-
             }
 
         }
-
         public ICursor SelectMyId()
         {
             String selectStm = "Select ifnull(max(" + userId + "), 0) as "+ userId + " from " + tableName;
             ICursor myresut = connectionObj.RawQuery(selectStm, null);
             return myresut;
+        }
+        public ICursor Validate_LogIn(string email)
+        {
+            String selectStm = "Select * from " + tableName + " where email='" + email + "';"; 
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
+
+            return myresut;
+        }
+        //complain id starts from here
+        public ICursor SelectComplainMyId()
+        {
+            String selectStm = "Select ifnull(max(" + complain_id + "), 0) as " + complain_id + " from " + tableComplain;
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
+            return myresut;
+        }
+        //update complain
+        public ICursor SelectMyDataToUpdate(string id,string complaintxt)
+        {
+            String myData = "Update " + tableComplain + " set " + complain + " = '" + complaintxt + "' where c_id = " + id + ";";
+            ICursor record = connectionObj.RawQuery(myData, null);
+
+            record.MoveToFirst();
+            Console.WriteLine(myData);
+            System.Console.WriteLine("My SQL  update STM \n  \n" + record);
+
+            //var complaints = record.GetString(record.GetColumnIndexOrThrow("complain"));
+           //System.Console.WriteLine("Name from complain " + complaints);
+            return record;
+        }
+
+        public void Delete_data(string myid)
+        {
+            string dltStm = "Delete from " + tableComplain + " where c_id=" + myid + ";";
+            Console.WriteLine(dltStm);
+            System.Console.WriteLine("My SQL  delete STM \n  \n" + dltStm);
+            connectionObj.ExecSQL(dltStm);
         }
 
         public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
