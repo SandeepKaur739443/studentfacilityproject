@@ -26,13 +26,18 @@ namespace StudentFacilityApp
         public static string email = "email";
         public static string contact = "contact";
         public static string pass = "password";
-
-        public static string test = "password";
-
+        
+        //complain table
+        public static string tableComplain = "ComplainTable";
+        public static string complain_id = "c_id";
+        public static string complain = "complaint";
 
         //create database
         public string creatTable = "Create Table " + tableName + "(" + userId + " int, "+ nameFiled + " Text, " + email + " Text, " +
         contact + " Text, " + pass + " Text);";
+
+        public string createTable = "Create Table " + tableComplain + "(" + complain_id + " int, " + complain + " Text);";
+
 
         SQLiteDatabase connectionObj;
 
