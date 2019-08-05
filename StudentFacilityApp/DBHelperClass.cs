@@ -167,13 +167,13 @@ namespace StudentFacilityApp
             connectionObj.ExecSQL(dltStm);
         }
         //selct complain
-        public ICursor SelectComplaintList()
+       /* public ICursor SelectComplaintList()
         {
-            String selectStm = "Select * from " + tableComplain;
+           // String selectStm = "Select * from " + tableComplain;
 
-            ICursor myresut = connectionObj.RawQuery(selectStm, null);
-            return myresut;
-        }
+           // ICursor myresut = connectionObj.RawQuery(selectStm, null);
+            //return myresut;
+        }*/
 
 
         public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)

@@ -11,10 +11,12 @@ using Android.Runtime;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
+
 
 namespace StudentFacilityApp
 {
-    [Activity(Label = "ComplaintBox")]
+    [Activity(Theme = "@style/AppTheme")]
     public class ComplaintBox : AppCompatActivity
     {
         // DBHelperClass myDB;
@@ -29,12 +31,30 @@ namespace StudentFacilityApp
         string user_email;
         private string Submit;
         private string Update;
-
+        Spinner spinnerView;
+        Toolbar toolb;
+        string[] myCategory = { "MENU", "Complaint Box", "Lost & Found", "Confessions" };
+        TextView myUser;
+        String valueFromLoginUser;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.ComplaintBoxLayout);
+
+            toolb = FindViewById<Toolbar>(Resource.Id.my_toolbar);
+
+            SetSupportActionBar(toolb);
+            spinnerView = FindViewById<Spinner>(Resource.Id.spinner1);
+
+            spinnerView.Adapter = new ArrayAdapter
+                (this, Android.Resource.Layout.SimpleListItem1, myCategory);
+
+            valueFromLoginUser = Intent.GetStringExtra("email");
+            myUser = FindViewById<TextView>(Resource.Id.welcomeuser);
+            myUser.Text = "Welcome," + valueFromLoginUser;
+            spinnerView.ItemSelected += MyItemSelectedMethod;
+
             // Create your application here
             myDB = new DBHelperClass(this);
 
@@ -96,6 +116,62 @@ namespace StudentFacilityApp
 
             };
 
+        }
+
+        private void MyItemSelectedMethod(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            var index = e.Position;
+
+            var value = myCategory[index];
+            System.Console.WriteLine("value is " + value);
+
+
+            if (value.Equals("Complaint Box"))
+            {
+                //create a veg array and create as a new adater 
+                Android.Content.Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                newScreen.PutExtra("email", valueFromLoginUser);
+                StartActivity(newScreen);
+            }
+            else if (value.Equals("Lost & Found"))
+            {
+                Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                StartActivity(newScreen);
+            }
+            else if (value.Equals("Confessions"))
+            {
+                Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                StartActivity(newScreen);
+            }
+        }
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            // set the menu layout on Main Activity  
+            MenuInflater.Inflate(Resource.Menu.menu1, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.menuItem1:
+                    {
+                        // add your code  
+                        return true;
+                    }
+                case Resource.Id.menuItem2:
+                    {
+                        // add your code  
+                        return true;
+                    }
+                case Resource.Id.menuItem3:
+                    {
+                        // add your code  
+                        return true;
+                    }
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
         public void myEditBtnClicEvent(object sender, EventArgs e)
         {
