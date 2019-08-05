@@ -14,45 +14,49 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="10dp"
+		android:textSize="15dp"
         
         />
 	<LinearLayout
 		android:orientation="horizontal"
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginRight="35dp">
+		
+		android:layout_marginRight="40dp"
+		android:layout_marginLeft="42dp"
+		android:layout_marginTop="15dp"
+		>
 	<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         android:id="@+id/txt1"
         android:text="Lost"
-        android:textSize="17dp"
-		android:layout_marginRight="40dp"
+        android:textSize="15dp"
+	
         
     />
 		<CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxlost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-		
+		android:layout_marginLeft="15dp"
+        
         />
  
-
-	<TextView
+<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         android:id="@+id/txt1"
         android:text="Found"
-        android:textSize="17dp"
-		android:layout_marginRight="10dp"
+        android:textSize="15dp"
+		android:layout_marginLeft="15dp"
     />
-       
+    
 <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="15dp"
         />
  
 
@@ -63,18 +67,18 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content">
 	    <ImageView
-        android:layout_height="20dp"
-        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
         android:id="@+id/img_logo"
-        android:layout_margin="30dp"
-	    android:src="@drawable/lc" />
+        android:gravity="center"
+	    android:src="@drawable/l" />
 
 	<EditText
-        android:layout_width="270dp"
+        android:layout_width="249dp"
         android:layout_height="wrap_content" 
         android:hint="Location"
         android:id="@+id/editText1"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="100dp"
         android:layout_marginTop="10dp"
 		android:textSize="20dp"
         
@@ -91,10 +95,10 @@
         android:layout_width="30dp"
         android:id="@+id/img_logo"
         android:layout_margin="30dp"
-        android:src="@drawable/c" />
+        android:src="@drawable/p" />
 
 	<EditText
-        android:layout_width="270dp"
+        android:layout_width="249dp"
         android:layout_height="wrap_content" 
         android:hint="Contact of Person"
         android:id="@+id/editText1"
@@ -112,22 +116,22 @@
         android:text="OR"
         android:textSize="17dp" />
 	<EditText
-        android:layout_width="270dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content" 
         android:hint="Contact At Main Reception"
         android:id="@+id/editText1"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginTop="10dp"
 		android:layout_marginRight="40dp"
 		android:textSize="20dp"
         
         />
 	<EditText
-        android:layout_width="270dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content" 
         android:hint="Description"
         android:id="@+id/editText1"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginTop="10dp"
 		android:textSize="20dp"
 		android:layout_marginRight="40dp"
