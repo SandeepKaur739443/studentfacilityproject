@@ -44,7 +44,6 @@ namespace StudentFacilityApp
 
         public string createTable = "Create Table " + tableComplain + "(" + complain_id + " int, " + complain + " Text," +email+ " Text," +comp_Date+ "Text);";
 
-
         SQLiteDatabase connectionObj;
 
        
@@ -53,6 +52,8 @@ namespace StudentFacilityApp
             myContex = context;
             connectionObj = WritableDatabase;
         }
+
+       
 
         public override void OnCreate(SQLiteDatabase db)
         {
@@ -165,6 +166,15 @@ namespace StudentFacilityApp
             System.Console.WriteLine("My SQL  delete STM \n  \n" + dltStm);
             connectionObj.ExecSQL(dltStm);
         }
+        //selct complain
+        public ICursor SelectComplaintList()
+        {
+            String selectStm = "Select * from " + tableComplain;
+
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
+            return myresut;
+        }
+
 
         public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {

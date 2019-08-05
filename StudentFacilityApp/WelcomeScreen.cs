@@ -11,6 +11,7 @@ using System;
 using Android.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Android.Content;
+using Android.Database;
 
 namespace StudentFacilityApp
 {
@@ -22,11 +23,17 @@ namespace StudentFacilityApp
         ViewPager _viewPager;
         BottomNavigationView _navigationView;
         Fragment[] _fragments;
+        DBHelperClass myDB;
+        ICursor cursor;
         Spinner spinnerView;
         Toolbar toolb;
         string[] myCategory = { "MENU", "Complaint Box", "Lost & Found", "Confessions" };
         TextView myUser;
         String valueFromLoginUser;
+        ListView myCompList;
+        private Fragment mycontext;
+
+        List<UserObject> myusersList = new List<UserObject>();
         protected override void OnCreate(Bundle savedInstanceState)
         {
 
@@ -34,13 +41,20 @@ namespace StudentFacilityApp
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.WelcomeScreen);
+            /*myDB = new DBHelperClass(this);
+            myDB.SelectComplaintList();
+            cursor = myDB.SelectComplaintList();
+            cursor.MoveToFirst();
+            while(cursor.MoveToNext())
+            {
 
+
+            }*/
             toolb = FindViewById<Toolbar>(Resource.Id.my_toolbar);
 
             SetSupportActionBar(toolb);
             spinnerView = FindViewById<Spinner>(Resource.Id.spinner1);
-
-
+            
             spinnerView.Adapter = new ArrayAdapter
                 (this, Android.Resource.Layout.SimpleListItem1, myCategory);
 
@@ -59,6 +73,7 @@ namespace StudentFacilityApp
             _navigationView = FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
             RemoveShiftMode(_navigationView);
             _navigationView.NavigationItemSelected += NavigationView_NavigationItemSelected;
+
         }
 
         private void MyItemSelectedMethod(object sender, AdapterView.ItemSelectedEventArgs e)
@@ -92,10 +107,11 @@ namespace StudentFacilityApp
 
         void InitializeTabs()
         {
+            
             _fragments = new Fragment[] {
                 new Fragment1(),
                 new Fragment2(),
-                 new Fragment1(),
+                //new Fragment1("Sandy","21",myusersList),
                 new Fragment2()
             };
         }
