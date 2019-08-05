@@ -66,24 +66,14 @@ namespace StudentFacilityApp
 
                 c_login = myDB.Validate_LogIn(myUserName.Text);
                 c_login.MoveToFirst();
-                if (c_login==null)
-                {
-                   // var showResu = FindViewById<TextView>(Resource.Id.emailResult);
-                alert.SetTitle("Error");
-                alert.SetMessage("Please Enter Valid Data");
-                alert.SetPositiveButton("OK", alertOKButton);
-                alert.SetNegativeButton("Cancel", alertOKButton);
-                Dialog myDialog = alert.Create();
-                myDialog.Show();
+               
+               
                 //showResult.Text = "Please enter Email Id";
                 
-                }
-                else
-                {
-                    
+               
                     var uname = c_login.GetString(c_login.GetColumnIndexOrThrow("email"));
                     var upass = c_login.GetString(c_login.GetColumnIndexOrThrow("password"));
-                    if (myUserPasswd.Text == upass)
+                    if ( uname == myUserName.Text && myUserPasswd.Text == upass)
 
                     {
                         //myDB.SelectMydata();
@@ -94,20 +84,21 @@ namespace StudentFacilityApp
 
                     else
                     {
-                        var showpasswdResult = FindViewById<TextView>(Resource.Id.passwordResult);
+                    alert.SetTitle("Error");
+                    alert.SetMessage("Please Enter Valid Data");
+                    alert.SetPositiveButton("OK", alertOKButton);
+                    alert.SetNegativeButton("Cancel", alertOKButton);
+                    Dialog myDialog = alert.Create();
+                    myDialog.Show();
 
-                        showpasswdResult.Text = "Please enetr Password";
-
-                    }
                 }
-               
-
+                
                 };
         }
         
         private void alertOKButton(object sender, DialogClickEventArgs e)
         {
-            throw new NotImplementedException();
+            System.Console.WriteLine("OK Button Pressed");
         }
 
         public bool isValidEmail(string email)

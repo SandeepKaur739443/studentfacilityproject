@@ -58,7 +58,16 @@
     />
 
 	</LinearLayout>
-
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/complaint_id"
+		
+		android:textSize="20dp"
+		android:textColor="#37D1D3"
+		android:layout_margin="10dp"
+		
+    />
 	<EditText
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -67,7 +76,7 @@
 		android:layout_marginLeft="40dp"
 		android:layout_marginRight="40dp"
 		android:layout_marginTop="40dp"
-		android:inputType="textPassword"/>
+		/>
 
 	<Button
 		android:layout_width="200dp"
