@@ -18,11 +18,11 @@ namespace StudentFacilityApp
         public String age;
         public int image;
 
-        public UserObject(string nameInfo, string ageInfo, int imgInfo)
+        public UserObject(string nameInfo)
         {
             name = nameInfo;
-            age = ageInfo;
-            image = imgInfo;
+           // age = ageInfo;
+           // image = imgInfo;
         }
     }
 }

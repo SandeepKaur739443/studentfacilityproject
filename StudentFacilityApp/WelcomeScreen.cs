@@ -13,6 +13,7 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 using Android.Content;
 using Android.Database;
 
+
 namespace StudentFacilityApp
 {
 
@@ -24,16 +25,19 @@ namespace StudentFacilityApp
         BottomNavigationView _navigationView;
         Fragment[] _fragments;
         DBHelperClass myDB;
-        ICursor cursor;
+       
         Spinner spinnerView;
         Toolbar toolb;
         string[] myCategory = { "MENU", "Complaint Box", "Lost & Found", "Confessions" };
         TextView myUser;
         String valueFromLoginUser;
-        ListView myCompList;
-        private Fragment mycontext;
-
+      
+     
+        TextView mytextcomp;
         List<UserObject> myusersList = new List<UserObject>();
+        
+       
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
 
@@ -41,15 +45,26 @@ namespace StudentFacilityApp
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.WelcomeScreen);
-            /*myDB = new DBHelperClass(this);
-            myDB.SelectComplaintList();
-            cursor = myDB.SelectComplaintList();
-            cursor.MoveToFirst();
-            while(cursor.MoveToNext())
-            {
+            myDB = new DBHelperClass(this);
+            /* myDB.SelectComplaintList();
+             cursor = myDB.SelectComplaintList();
+             cursor.MoveToFirst();
+             while(cursor.MoveToNext())
+             {
 
 
-            }*/
+             }*/
+            mytextcomp = FindViewById<TextView>(Resource.Id.mycomp);
+            myDB.Selectcomplain();
+            ICursor cur = myDB.Selectcomplain();
+            cur.MoveToFirst();
+            mytextcomp.Text = cur.GetString(cur.GetColumnIndexOrThrow("complaint"));
+            Console.WriteLine(mytextcomp);
+
+            myusersList.Add(new UserObject(mytextcomp.Text));
+
+           var myAdatper = new MyCustomAdapter(this, myusersList);
+
             toolb = FindViewById<Toolbar>(Resource.Id.my_toolbar);
 
             SetSupportActionBar(toolb);
@@ -93,7 +108,8 @@ namespace StudentFacilityApp
             }
             else if (value.Equals("Lost & Found"))
             {
-                Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                Android.Content.Intent newScreen = new Intent(this, typeof(LostandFound));
+                newScreen.PutExtra("email", valueFromLoginUser);
                 StartActivity(newScreen);
             }
             else if (value.Equals("Confessions"))
@@ -107,12 +123,12 @@ namespace StudentFacilityApp
 
         void InitializeTabs()
         {
-            
-            _fragments = new Fragment[] {
-                new Fragment1(),
-                new Fragment2(),
+
+                _fragments = new Fragment[] {
+                new Fragment1( mytextcomp.Text,this),
+               // new Fragment2(),
                 //new Fragment1("Sandy","21",myusersList),
-                new Fragment2()
+                //new Fragment2()
             };
         }
 
@@ -172,12 +188,17 @@ namespace StudentFacilityApp
             {
                 case Resource.Id.menuItem1:
                     {
-                        // add your code  
+                        Android.Content.Intent newScreen = new Intent(this, typeof(Profile));
+                        newScreen.PutExtra("userName", valueFromLoginUser);
+                        StartActivity(newScreen);
+                        
                         return true;
                     }
                 case Resource.Id.menuItem2:
                     {
-                        // add your code  
+                        Android.Content.Intent newScreen = new Intent(this, typeof(MainActivity));
+                        newScreen.PutExtra("userName", valueFromLoginUser);
+                        StartActivity(newScreen);
                         return true;
                     }
                 case Resource.Id.menuItem3:

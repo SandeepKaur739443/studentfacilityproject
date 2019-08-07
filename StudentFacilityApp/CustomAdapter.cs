@@ -17,12 +17,16 @@ namespace StudentFacilityApp
     {
         List<UserObject> userList;
         Activity mycontext;
+        
+        private List<UserObject> myUsersList;
 
         public MyCustomAdapter(Activity contex, List<UserObject> userArray)
         {
             userList = userArray;
             mycontext = contex;
         }
+
+       
 
         public override UserObject this[int position]
         {

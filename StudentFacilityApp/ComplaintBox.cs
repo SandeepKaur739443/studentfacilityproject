@@ -29,7 +29,7 @@ namespace StudentFacilityApp
         DBHelperClass myDB;
         ICursor complain_cr;
         string user_email;
-        private string Submit;
+       
         private string Update;
         Spinner spinnerView;
         Toolbar toolb;
@@ -156,12 +156,17 @@ namespace StudentFacilityApp
             {
                 case Resource.Id.menuItem1:
                     {
-                        // add your code  
+                        Android.Content.Intent newScreen = new Intent(this, typeof(Profile));
+                        newScreen.PutExtra("userName", valueFromLoginUser);
+                        StartActivity(newScreen);
+
                         return true;
                     }
                 case Resource.Id.menuItem2:
                     {
-                        // add your code  
+                        Android.Content.Intent newScreen = new Intent(this, typeof(MainActivity));
+                        newScreen.PutExtra("userName", valueFromLoginUser);
+                        StartActivity(newScreen);
                         return true;
                     }
                 case Resource.Id.menuItem3:

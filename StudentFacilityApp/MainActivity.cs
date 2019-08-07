@@ -24,7 +24,7 @@ namespace StudentFacilityApp
         DBHelperClass myDB;
         ICursor c_login;
         private readonly object myUser;
-        private readonly object mypswd;
+     
 
         protected override void OnCreate(Bundle savedInstanceState)
         {

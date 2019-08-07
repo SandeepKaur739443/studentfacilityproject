@@ -1,57 +1,37 @@
-﻿
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Android;
+using Android.App;
+using Android.Content;
 using Android.OS;
-using Android.Support.V4.App;
+using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
-using System;
-using System.Collections.Generic;
-
+using Android.Support.V4.App;
 namespace StudentFacilityApp
 {
-    public class Fragment1 : Fragment
+
+
+    public class Fragment1 : Android.Support.V4.App.Fragment
     {
+
+
+        string[] movieArray = { "A-Moive", "B-Moive",
+                "C-Moive", "D-Moive", "E-Moive", "F - Moive", "G  - Moive", "H  - Moive", "I  - Moive"};
+
+
         public String myName;
-        public String age;
-        DBHelperClass myDB;
-        MyCustomAdapter CustomAdapter;
-        List<UserObject> myUsersList = new List<UserObject>();
-        ListView mylist;
-        
-        public Fragment1()
+        public Activity myContext;
+
+        public Fragment1(string name, Activity context)
         {
-            
-           /*myName = name;
-           age = age1;
-           myUsersList = templist;*/
-           
-        }
-        public override void OnCreate(Bundle savedInstanceState)
-        {
-           base.OnCreate(savedInstanceState);
-           //myDB = new DBHelperClass(this);
-           //Console.WriteLine("genius bht boln lg gya");
-           // Create your fragment here
-            
+            myName = name;
+            myContext = context;
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            // Use this to return your custom view for this Fragment
-            View myView = inflater.Inflate(Resource.Layout.FFragmentLayout, container, false);
-            mylist = myView.FindViewById<ListView>(Resource.Id.mylistview);
-
-            myView.FindViewById<TextView>(Resource.Id.myNameIdl).Text = myName;
-            myView.FindViewById<TextView>(Resource.Id.listID).Text = age;
-
-            return myView;
-            return inflater.Inflate(Resource.Layout.FFragmentLayout, container, false);
-        }
-    }
-
-
-    public class Fragment2 : Fragment
-    {
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -62,8 +42,16 @@ namespace StudentFacilityApp
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             // Use this to return your custom view for this Fragment
-            return inflater.Inflate(Resource.Layout.SFragmentLayout, container, false);
+            View myView = inflater.Inflate(Resource.Layout.FFragmentLayout, container, false);
+            ListView myList = myView.FindViewById<ListView>(Resource.Id.listID);
+            myView.FindViewById<TextView>(Resource.Id.myNameIdl).Text = myName;
 
+            myList.Adapter = new ArrayAdapter(myContext, Android.Resource.Layout.SimpleListItem1, movieArray);
+
+
+            return myView;
+
+            //return base.OnCreateView(inflater, container, savedInstanceState);
         }
     }
 }

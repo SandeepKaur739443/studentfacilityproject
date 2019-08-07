@@ -34,7 +34,20 @@ namespace StudentFacilityApp
         public static string complain = "complaint";
         public static string comp_Date = "Complaint_date";
 
-        
+
+        //Lost and Found Table
+        public static string tableLF = "LostFoundTable";
+        public static string item_id ="item_ID";
+        public static string item_name = "item_name";
+        public static string status = "item_status";
+        public static string item_location = "location";
+        public static string item_des = "description";
+        public static string p_email = "email";
+
+
+
+
+
 
 
 
@@ -42,7 +55,14 @@ namespace StudentFacilityApp
         public string creatTable = "Create Table " + tableName + "(" + userId + " int, "+ nameFiled + " Text, " + email + " Text, " +
         contact + " Text, " + pass + " Text);";
 
+        //complain table
         public string createTable = "Create Table " + tableComplain + "(" + complain_id + " int, " + complain + " Text," +email+ " Text," +comp_Date+ "Text);";
+
+       
+        //lostand found table
+        public string CreateTableLF = "Create Table " + tableLF + "(" + item_id + " int, " + item_name + " Text, " + status + " Text, " +
+            item_location + " Text, " + item_des + " Text, " + p_email + " Text );";
+
 
         SQLiteDatabase connectionObj;
 
@@ -61,10 +81,10 @@ namespace StudentFacilityApp
 
             db.ExecSQL(creatTable);
             db.ExecSQL(createTable);
+            db.ExecSQL(CreateTableLF);
         }
 
-       
-
+      
         //insert data in database
         public void InsertValue(string value_id, string value_username, string value_email, string value_contact, string value_pass)
         {
@@ -80,6 +100,7 @@ namespace StudentFacilityApp
 
         }
 
+       
         //insert complaint
         public void InsertmyComplaint(string myid, string myComplaint, string user_email, string dt)
         {
@@ -91,6 +112,21 @@ namespace StudentFacilityApp
 
             connectionObj.ExecSQL(insertStm);
         }
+
+      
+        //insert Lost and Found
+        public void InsertmyLostFound(string itemID, string item_Name, string item_status, string item_loc, string item_Descr, string user_email)
+        {
+           string insertStm = "Insert into " +
+           tableLF + " values (" + itemID + ", '" + item_Name + "'" + "," + "'" + item_status + "'" + "," + "'" + item_loc + "'" + "," + "'" +
+           item_Descr + "'" + "," + "'" + user_email + "'); ";
+            Console.WriteLine(insertStm);
+
+            System.Console.WriteLine("My SQL  Insert STM \n  \n" + insertStm);
+
+            connectionObj.ExecSQL(insertStm);
+        }
+
         //show data on screen
         public void SelectMydata()
         {
@@ -144,6 +180,13 @@ namespace StudentFacilityApp
             ICursor myresut = connectionObj.RawQuery(selectStm, null);
             return myresut;
         }
+        //item id starts from here
+        public ICursor SelectmyItemId()
+        {
+            String selectStm = "Select ifnull(max(" + item_id + "), 0) as " + item_id + " from " + tableLF;
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
+            return myresut;
+        }
         //update complain
         public ICursor SelectMyDataToUpdate(string id,string complaintxt)
         {
@@ -158,7 +201,8 @@ namespace StudentFacilityApp
            //System.Console.WriteLine("Name from complain " + complaints);
             return record;
         }
-
+        
+     
         public void Delete_data(string myid)
         {
             string dltStm = "Delete from " + tableComplain + " where c_id=" + myid + ";";
@@ -167,14 +211,65 @@ namespace StudentFacilityApp
             connectionObj.ExecSQL(dltStm);
         }
         //selct complain
-       /* public ICursor SelectComplaintList()
+        /* public ICursor SelectComplaintList()
+         {
+            // String selectStm = "Select * from " + tableComplain;
+
+            // ICursor myresut = connectionObj.RawQuery(selectStm, null);
+             //return myresut;
+         }*/
+
+        //update lostFound
+        public ICursor SelectMyItemToUpdate(string item_id, string it_name, string stats, string location, string descrp)
         {
-           // String selectStm = "Select * from " + tableComplain;
+            String myData = "Update " + tableLF + " set " + item_name + " = '" + it_name + "', " + status + "='" + stats + "', " + item_location + "='" + location + "', " + item_des + "='" + descrp + "' where item_ID = " + item_id + ";";
+            ICursor record = connectionObj.RawQuery(myData, null);
 
-           // ICursor myresut = connectionObj.RawQuery(selectStm, null);
-            //return myresut;
-        }*/
+            record.MoveToFirst();
+            Console.WriteLine(myData);
+            System.Console.WriteLine("My SQL  update STM \n  \n" + record);
 
+            //var complaints = record.GetString(record.GetColumnIndexOrThrow("complain"));
+            //System.Console.WriteLine("Name from complain " + complaints);
+            return record;
+        }
+        //delete lost and found
+        internal void Delete_myItem(string itemid)
+        {
+            string dltStm = "Delete from " + tableLF + " where item_ID=" + item_id + ";";
+            Console.WriteLine(dltStm);
+            System.Console.WriteLine("My SQL  delete STM \n  \n" + dltStm);
+            connectionObj.ExecSQL(dltStm);
+        }
+
+        //select profile
+        public ICursor SelectProfile(string p_email)
+        {
+            String selectStm = "Select * from " + tableName + " where email='" + p_email + "';";
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
+
+            return myresut;
+        }
+        //update profile
+        public ICursor SelectMyProfileToUpdate(string userpId, string pname, string pcontact, string p_pass)
+        {
+            String myData = "Update " + tableName + " set " + nameFiled + " = '" + pname + "', " + contact + "='" + pcontact + "', " + pass + "='" + p_pass + "' where id = " + userpId + "; ";
+            ICursor record = connectionObj.RawQuery(myData, null);
+
+            record.MoveToFirst();
+            Console.WriteLine(myData);
+            System.Console.WriteLine("My SQL  update STM \n  \n" + record);
+            return record;
+        }
+
+        //select complain on welcome
+        public ICursor Selectcomplain()
+        {
+            String selectStm = "Select * from " + tableComplain + ";";
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
+
+            return myresut;
+        }
 
         public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
