@@ -12,19 +12,17 @@ using Android.Widget;
 
 namespace StudentFacilityApp
 {
-    public class UserObject
+    class UserViewListOb
     {
-        public String name;
-        public string desc;
-        public String email;
+        public string email;
+        public string name;
         public int image;
 
-        public UserObject(string nameInfo, string descInfo, string emailInfo, int imgInfo)
+        public UserViewListOb(string nameInfo, string ageInfo, int imgInfo)
         {
-            name = nameInfo;
-            desc = descInfo;
-            email = emailInfo;
+            email = nameInfo;
+            name = ageInfo;
             image = imgInfo;
         }
-}
     }
+}

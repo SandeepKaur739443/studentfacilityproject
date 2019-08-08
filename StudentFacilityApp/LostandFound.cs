@@ -30,10 +30,14 @@ namespace StudentFacilityApp
         DBHelperClass myDB;
         ICursor item_cr;
         Spinner spinnerView;
+        Spinner spinnerView1;
         Toolbar toolb;
         string[] myCategory = { "MENU", "Welcome", "Complaint Box", "Confessions" };
         TextView myUser;
         String valueFromLoginUser;
+        string[] Item_cat = { "Select Item Category", "Bag", "Student Card", "Accessory" };
+        string image;
+        Button btn_View;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -43,6 +47,7 @@ namespace StudentFacilityApp
             toolb = FindViewById<Toolbar>(Resource.Id.my_toolbar);
 
             SetSupportActionBar(toolb);
+            //main spinner
             spinnerView = FindViewById<Spinner>(Resource.Id.spinner1);
 
             spinnerView.Adapter = new ArrayAdapter
@@ -53,8 +58,15 @@ namespace StudentFacilityApp
             myUser.Text = "Welcome," + valueFromLoginUser;
             spinnerView.ItemSelected += MyItemSelectedMethod;
 
-            //page coding
-           
+
+            //cat spinner
+            spinnerView1 = FindViewById<Spinner>(Resource.Id.spinner2);
+
+            spinnerView1.Adapter = new ArrayAdapter
+                (this, Android.Resource.Layout.SimpleListItem1, Item_cat);
+
+            spinnerView1.ItemSelected += MycatItemSelectedMethod;
+
             myDB = new DBHelperClass(this);
             user_email = Intent.GetStringExtra("email");
 
@@ -72,17 +84,17 @@ namespace StudentFacilityApp
             item_cr = myDB.SelectmyItemId();
             item_cr.MoveToFirst();
             itemid.Text = (item_cr.GetInt(item_cr.GetColumnIndex("item_ID")) + 1).ToString();
-
+            
 
             btn_Submit.Click += delegate
             {
                 if (lost.Checked)
                 {
-                    myDB.InsertmyLostFound(itemid.Text, itemName.Text, lost.Text, item_loc.Text, item_des.Text, user_email);
+                    myDB.InsertmyLostFound(itemid.Text, itemName.Text, lost.Text, item_loc.Text, item_des.Text,image, user_email);
                 }
                 else
-                    {
-                    myDB.InsertmyLostFound(itemid.Text, itemName.Text, found.Text, item_loc.Text, item_des.Text, user_email);
+                {
+                    myDB.InsertmyLostFound(itemid.Text, itemName.Text, found.Text, item_loc.Text, item_des.Text,image, user_email);
 
                 }
             };
@@ -94,11 +106,45 @@ namespace StudentFacilityApp
             {
                 myDB.Delete_myItem(itemid.Text);
             };
+            btn_View = FindViewById<Button>(Resource.Id.view);
+
+            btn_View.Click += delegate
+            {
+                Android.Content.Intent newScreen = new Intent(this, typeof(ViewItemsLF));
+                newScreen.PutExtra("email", valueFromLoginUser);
+                StartActivity(newScreen);
+            };
 
 
         }
-       
-        private void MyItemSelectedMethod(object sender, AdapterView.ItemSelectedEventArgs e)
+
+        private void MycatItemSelectedMethod(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            var index1 = e.Position;
+
+            var val = myCategory[index1];
+            System.Console.WriteLine("value is " + val);
+            switch(e.Position)
+            {
+                case 0:
+                    image= Convert.ToString(Resource.Drawable.p);
+                    break;
+
+                case 1:
+                    image = Convert.ToString(Resource.Drawable.p);
+                    break;
+
+                case 2:
+                    image = Convert.ToString(Resource.Drawable.LC);
+                    break;
+
+            }
+
+            
+        }
+    
+        
+           private void MyItemSelectedMethod(object sender, AdapterView.ItemSelectedEventArgs e)
         {
             var index = e.Position;
 

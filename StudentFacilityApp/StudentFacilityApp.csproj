@@ -59,17 +59,20 @@
     <Compile Include="ComplaintBox.cs" />
     <Compile Include="CustomAdapter.cs" />
     <Compile Include="DBHelperClass.cs" />
-    <Compile Include="FirstTabFragment.cs" />
     <Compile Include="Fragment1.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="LostandFound.cs" />
+    <Compile Include="MyCustomAdapterList.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecondTabFragment.cs" />
+    <Compile Include="SelectedItemDetail.cs" />
     <Compile Include="SignUp.cs" />
     <Compile Include="UserObject.cs" />
+    <Compile Include="UserViewListOb.cs" />
     <Compile Include="ViewPagerAdapter.cs" />
+    <Compile Include="ViewItemsLF.cs" />
     <Compile Include="WelcomeScreen.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +169,19 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\User_Profile.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ViewItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\google_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\selectItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

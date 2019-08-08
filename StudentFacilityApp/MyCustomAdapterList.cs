@@ -1,32 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System.Collections.Generic;
 using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-
 namespace StudentFacilityApp
 {
-    public class MyCustomAdapter : BaseAdapter<UserObject>
+    public class MyCustomAdapterList : BaseAdapter<UserObject>
     {
         List<UserObject> userList;
         Activity mycontext;
-        
-        private List<UserObject> myUsersList;
 
-        public MyCustomAdapter(Activity contex, List<UserObject> userArray)
+        public MyCustomAdapterList(Activity contex, List<UserObject> userArray)
         {
             userList = userArray;
             mycontext = contex;
         }
-
-       
 
         public override UserObject this[int position]
         {
@@ -47,7 +35,6 @@ namespace StudentFacilityApp
             return position;
         }
 
-
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             View myView = convertView;
@@ -58,9 +45,9 @@ namespace StudentFacilityApp
                 myView = mycontext.LayoutInflater.Inflate(Resource.Layout.CellLayout, null);
             }
 
-           // myView.FindViewById<TextView>(Resource.Id.myNameIdl).Text = myObj.name;
-            myView.FindViewById<TextView>(Resource.Id.listView1).Text = myObj.email;
-            
+            myView.FindViewById<TextView>(Resource.Id.nameID).Text = myObj.email;
+            myView.FindViewById<TextView>(Resource.Id.ageID).Text = myObj.name;
+            myView.FindViewById<ImageView>(Resource.Id.userImageId).SetImageResource(myObj.image);
             return myView;
         }
     }

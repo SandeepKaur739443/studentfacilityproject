@@ -17,26 +17,26 @@ using Android.Database;
 namespace StudentFacilityApp
 {
 
-    [Android.App.Activity( Theme = "@style/AppTheme", MainLauncher = false)]
+    [Android.App.Activity(Theme = "@style/AppTheme", MainLauncher = false)]
 
     public class WelcomeScreen : AppCompatActivity
-    { 
+    {
         ViewPager _viewPager;
         BottomNavigationView _navigationView;
         Fragment[] _fragments;
         DBHelperClass myDB;
-       
+
         Spinner spinnerView;
         Toolbar toolb;
         string[] myCategory = { "MENU", "Complaint Box", "Lost & Found", "Confessions" };
         TextView myUser;
         String valueFromLoginUser;
-      
-     
+
+        ListView lv1;
         TextView mytextcomp;
         List<UserObject> myusersList = new List<UserObject>();
-        
-       
+        MyCustomAdapter myAdapter;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -46,6 +46,9 @@ namespace StudentFacilityApp
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.WelcomeScreen);
             myDB = new DBHelperClass(this);
+
+
+
             /* myDB.SelectComplaintList();
              cursor = myDB.SelectComplaintList();
              cursor.MoveToFirst();
@@ -55,42 +58,54 @@ namespace StudentFacilityApp
 
              }*/
             mytextcomp = FindViewById<TextView>(Resource.Id.mycomp);
-            myDB.Selectcomplain();
+          /*  myDB.Selectcomplain();
             ICursor cur = myDB.Selectcomplain();
             cur.MoveToFirst();
-            mytextcomp.Text = cur.GetString(cur.GetColumnIndexOrThrow("complaint"));
-            Console.WriteLine(mytextcomp);
+            if (cur.MoveToFirst())
+            {
+                do
+                {
+                    string image = cur.GetString(cur.GetColumnIndexOrThrow("item_sub"));
+                    int im = Convert.ToInt32(image);
+                    myusersList.Add(new UserObject("myDB.Selectcomplain();","myDB.Selectcomplain();",im));
+                }
 
-            myusersList.Add(new UserObject(mytextcomp.Text));
+                while (cur.MoveToNext());
+                {
 
-           var myAdatper = new MyCustomAdapter(this, myusersList);
 
-            toolb = FindViewById<Toolbar>(Resource.Id.my_toolbar);
+                }
+                cur.Close(); */
+                // lv1 = FindViewById<ListView>(Resource.Id.listView1);
+                var myAdatper = new MyCustomAdapter(this, myusersList);
+                //lv1.Adapter = myAdapter;
+                toolb = FindViewById<Toolbar>(Resource.Id.my_toolbar);
 
-            SetSupportActionBar(toolb);
-            spinnerView = FindViewById<Spinner>(Resource.Id.spinner1);
-            
-            spinnerView.Adapter = new ArrayAdapter
-                (this, Android.Resource.Layout.SimpleListItem1, myCategory);
+                SetSupportActionBar(toolb);
+                spinnerView = FindViewById<Spinner>(Resource.Id.spinner1);
 
-            valueFromLoginUser = Intent.GetStringExtra("userName");
-            myUser = FindViewById<TextView>(Resource.Id.welcomeuser);
-            myUser.Text = "Welcome," + valueFromLoginUser;
-            // this.Title = "welcome admin";
-            spinnerView.ItemSelected += MyItemSelectedMethod;
+                spinnerView.Adapter = new ArrayAdapter
+                    (this, Android.Resource.Layout.SimpleListItem1, myCategory);
 
-            InitializeTabs();
+                valueFromLoginUser = Intent.GetStringExtra("userName");
+                myUser = FindViewById<TextView>(Resource.Id.welcomeuser);
+                myUser.Text = "Welcome," + valueFromLoginUser;
+                // this.Title = "welcome admin";
+                spinnerView.ItemSelected += MyItemSelectedMethod;
 
-            _viewPager = FindViewById<ViewPager>(Resource.Id.viewpager);
-            _viewPager.PageSelected += ViewPager_PageSelected;
-            _viewPager.Adapter = new ViewPagerAdapter(SupportFragmentManager, _fragments);
+                InitializeTabs();
 
-            _navigationView = FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
-            RemoveShiftMode(_navigationView);
-            _navigationView.NavigationItemSelected += NavigationView_NavigationItemSelected;
+                _viewPager = FindViewById<ViewPager>(Resource.Id.viewpager);
+                _viewPager.PageSelected += ViewPager_PageSelected;
+                _viewPager.Adapter = new ViewPagerAdapter(SupportFragmentManager, _fragments);
 
-        }
+                _navigationView = FindViewById<BottomNavigationView>(Resource.Id.bottom_navigation);
+                RemoveShiftMode(_navigationView);
+                _navigationView.NavigationItemSelected += NavigationView_NavigationItemSelected;
 
+            }
+
+        
         private void MyItemSelectedMethod(object sender, AdapterView.ItemSelectedEventArgs e)
         {
             var index = e.Position;
@@ -125,9 +140,9 @@ namespace StudentFacilityApp
         {
 
                 _fragments = new Fragment[] {
-                new Fragment1( mytextcomp.Text,this),
+                 new Fragment1(this),
                // new Fragment2(),
-                //new Fragment1("Sandy","21",myusersList),
+               // new Fragment1(),
                 //new Fragment2()
             };
         }

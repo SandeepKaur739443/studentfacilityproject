@@ -34,6 +34,7 @@ namespace StudentFacilityApp
         public static string complain = "complaint";
         public static string comp_Date = "Complaint_date";
 
+       
 
         //Lost and Found Table
         public static string tableLF = "LostFoundTable";
@@ -42,6 +43,7 @@ namespace StudentFacilityApp
         public static string status = "item_status";
         public static string item_location = "location";
         public static string item_des = "description";
+        public static string item_sub = "item_sub";
         public static string p_email = "email";
 
 
@@ -61,11 +63,10 @@ namespace StudentFacilityApp
        
         //lostand found table
         public string CreateTableLF = "Create Table " + tableLF + "(" + item_id + " int, " + item_name + " Text, " + status + " Text, " +
-            item_location + " Text, " + item_des + " Text, " + p_email + " Text );";
+            item_location + " Text, " + item_des + " Text, " + item_sub + " Text, " + p_email + " Text );";
 
 
         SQLiteDatabase connectionObj;
-
        
         public DBHelperClass(Context context) : base(context, name: DBName, factory: null, version: 1)
         {
@@ -73,8 +74,7 @@ namespace StudentFacilityApp
             connectionObj = WritableDatabase;
         }
 
-       
-
+      
         public override void OnCreate(SQLiteDatabase db)
         {
             System.Console.WriteLine("My Create Table STM \n \n" + creatTable);
@@ -115,11 +115,11 @@ namespace StudentFacilityApp
 
       
         //insert Lost and Found
-        public void InsertmyLostFound(string itemID, string item_Name, string item_status, string item_loc, string item_Descr, string user_email)
+        public void InsertmyLostFound(string itemID, string item_Name, string item_status, string item_loc, string item_Descr, string itemsub, string user_email)
         {
            string insertStm = "Insert into " +
            tableLF + " values (" + itemID + ", '" + item_Name + "'" + "," + "'" + item_status + "'" + "," + "'" + item_loc + "'" + "," + "'" +
-           item_Descr + "'" + "," + "'" + user_email + "'); ";
+           item_Descr + "'" + "," + "'" + itemsub + "'"+"," + "'" + user_email + "'); ";
             Console.WriteLine(insertStm);
 
             System.Console.WriteLine("My SQL  Insert STM \n  \n" + insertStm);
@@ -270,6 +270,17 @@ namespace StudentFacilityApp
 
             return myresut;
         }
+        //select view item
+        public ICursor SelectIteme()
+        {
+            string selectStm1 = string.Format("Select * from {0} ", tableLF);
+
+            ICursor myresut1 = connectionObj.RawQuery(selectStm1, null);
+
+            return myresut1;
+
+        }
+
 
         public override void OnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
