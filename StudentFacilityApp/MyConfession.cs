@@ -13,47 +13,43 @@ using Android.Views;
 using Android.Widget;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
-
 namespace StudentFacilityApp
 {
     [Activity(Theme = "@style/AppTheme")]
     public class MyConfession : AppCompatActivity
     {
-        // DBHelperClass myDB;
         Button myAddBtn;
         Button myEditBtn;
         Button myDelBtn;
-        Button mycomplaintBtn;
-        EditText myComplaint;
-        TextView myid;
+        Button myconBtn;
+        EditText myconfession;
+        TextView mycid;
         DBHelperClass myDB;
-        ICursor complain_cr;
+        ICursor con_cr;
         string user_email;
 
         private string Update;
-        Spinner spinnerView;
+        Spinner spinnerv;
         Toolbar toolb;
-        string[] myCategory = { "MENU", "Welcome","Complaint Box", "Lost & Found" };
+        string[] myCategory = { "MENU", "Welcome", "Complaint Box", "Lost & Found" };
         TextView myUser;
         String valueFromLoginUser;
+        ImageView eye;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            SetContentView(Resource.Layout.confession);
-
+            SetContentView(Resource.Layout.MyConfessions);
             toolb = FindViewById<Toolbar>(Resource.Id.my_toolbar);
-
             SetSupportActionBar(toolb);
-            spinnerView = FindViewById<Spinner>(Resource.Id.spinner3);
+            spinnerv = FindViewById<Spinner>(Resource.Id.spinners);
 
-            spinnerView.Adapter = new ArrayAdapter
+            spinnerv.Adapter = new ArrayAdapter
                 (this, Android.Resource.Layout.SimpleListItem1, myCategory);
 
             valueFromLoginUser = Intent.GetStringExtra("email");
             myUser = FindViewById<TextView>(Resource.Id.welcomeuser);
             myUser.Text = "Welcome," + valueFromLoginUser;
-            spinnerView.ItemSelected += MyItemSelectedMethod;
+            spinnerv.ItemSelected += MyItemSelectedMethod;
 
             // Create your application here
             myDB = new DBHelperClass(this);
@@ -62,32 +58,33 @@ namespace StudentFacilityApp
             myAddBtn = FindViewById<Button>(Resource.Id.AddConBtn);
             myEditBtn = FindViewById<Button>(Resource.Id.EditConBtn);
             myDelBtn = FindViewById<Button>(Resource.Id.DelConBtn);
-            mycomplaintBtn = FindViewById<Button>(Resource.Id.sub_conBtn);
-            myComplaint = FindViewById<EditText>(Resource.Id.userConfession);
+            myconBtn = FindViewById<Button>(Resource.Id.sub_conBtn);
+            myconfession = FindViewById<EditText>(Resource.Id.userConfession);
 
             //complain_cr id
-            myid = FindViewById<TextView>(Resource.Id.con_id);
-            complain_cr = myDB.SelectComplainMyId();
-            complain_cr.MoveToFirst();
-            myid.Text = (complain_cr.GetInt(complain_cr.GetColumnIndex("c_id")) + 1).ToString();
+            mycid = FindViewById<TextView>(Resource.Id.con_id);
+            con_cr = myDB.SelectConfessionMyId();
+            con_cr.MoveToFirst();
+            mycid.Text = (con_cr.GetInt(con_cr.GetColumnIndex("con_id")) + 1).ToString();
 
+            eye = FindViewById<ImageView>(Resource.Id.imageeye);
 
             //mycomplaintBtn.Text = "Submit";
 
-            mycomplaintBtn.Click += delegate
+            myconBtn.Click += delegate
             {
-                if (mycomplaintBtn.Text.ToLower() == "submit")
+                if (myconBtn.Text.ToLower() == "submit")
                 {
-                    myDB.InsertmyComplaint(myid.Text, myComplaint.Text, user_email, DateTime.Now.ToShortDateString().ToString());
+                    myDB.InsertmyConfession(mycid.Text, myconfession.Text, user_email, DateTime.Now.ToShortDateString().ToString());
                 }
-                else if (mycomplaintBtn.Text.ToLower() == "update")
+                else if (myconBtn.Text.ToLower() == "update")
                 {
-                    myDB.SelectMyDataToUpdate(myid.Text, myComplaint.Text);
+                    myDB.SelectMyConfessionToUpdate(mycid.Text, myconfession.Text);
                 }
-                else if (mycomplaintBtn.Text.ToLower() == "delete")
+                else if (myconBtn.Text.ToLower() == "delete")
                 {
-                    //myDB.SelectMyDataToUpdate(myid.Text, myComplaint.Text, DateTime.Now.ToShortDateString().ToString());
-                    myDB.Delete_data(myid.Text);
+                   
+                    myDB.Delete_condata(mycid.Text);
                 }
 
             };
@@ -95,26 +92,33 @@ namespace StudentFacilityApp
             myEditBtn.Click += delegate
             {
                 //name.Enabled = true;
-                myComplaint.Enabled = true;
-                mycomplaintBtn.Text = "Update";
+                myconfession.Enabled = true;
+                myconBtn.Text = "Update";
 
             };
             myDelBtn.Click += delegate
             {
-                myComplaint.Enabled = true;
-                mycomplaintBtn.Text = "Delete";
+                myconfession.Enabled = true;
+                myconBtn.Text = "Delete";
             };
             myAddBtn.Click += delegate
             {
-                myComplaint.Enabled = true;
-                mycomplaintBtn.Text = "Submit";
-                myComplaint.Text = "";
-                complain_cr = myDB.SelectComplainMyId();
-                complain_cr.MoveToFirst();
-                myid.Text = (complain_cr.GetInt(complain_cr.GetColumnIndex("c_id")) + 1).ToString();
+                myconfession.Enabled = true;
+                myconBtn.Text = "Submit";
+                myconfession.Text = "";
+                con_cr = myDB.SelectConfessionMyId();
+                con_cr.MoveToFirst();
+                mycid.Text = (con_cr.GetInt(con_cr.GetColumnIndex("con_id")) + 1).ToString();
 
 
             };
+            eye.Click += delegate
+            {
+                Intent newScreen = new Intent(this, typeof(ViewConfessionList));
+                newScreen.PutExtra("email", valueFromLoginUser);
+                StartActivity(newScreen);
+            };
+
 
         }
 
@@ -180,10 +184,13 @@ namespace StudentFacilityApp
         }
         public void myEditBtnClicEvent(object sender, EventArgs e)
         {
-            myComplaint.Enabled = true;
-            mycomplaintBtn.Text = "Delete";
+            myconfession.Enabled = true;
+            myconBtn.Text = "Delete";
 
 
         }
     }
 }
+
+
+  

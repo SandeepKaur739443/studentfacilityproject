@@ -129,7 +129,8 @@ namespace StudentFacilityApp
             }
             else if (value.Equals("Confessions"))
             {
-                Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                Intent newScreen = new Intent(this, typeof(MyConfession));
+                newScreen.PutExtra("email", valueFromLoginUser);
                 StartActivity(newScreen);
             }
 

@@ -27,19 +27,21 @@ namespace StudentFacilityApp
         public static string contact = "contact";
         public static string pass = "password";
 
-        
         //complain table
         public static string tableComplain = "ComplainTable";
         public static string complain_id = "c_id";
         public static string complain = "complaint";
         public static string comp_Date = "Complaint_date";
 
-       
+
 
         //Lost and Found Table
         public static string tableLF = "LostFoundTable";
-        public static string item_id ="item_ID";
+        public static string item_id = "item_ID";
         public static string item_name = "item_name";
+
+        
+
         public static string status = "item_status";
         public static string item_location = "location";
         public static string item_des = "description";
@@ -47,34 +49,50 @@ namespace StudentFacilityApp
         public static string p_email = "email";
 
 
+        //COnfession Table
+        
+        public static string tableConfession = "ConTable";
+        public static string conf_id = "con_id";
+        public static string confession = "my_confession";
+        public static string con_Date = "Confession_date";
 
+        //fav COnfession Table
 
+        public static string tableFavConfession = "ConFavTable";
+        public static string confav_id = "confavr_id";
+        public static string confession_fav = "fav_confession";
+        public static string confav_Date = "Confessionfav_date";
 
 
 
 
         //create database
-        public string creatTable = "Create Table " + tableName + "(" + userId + " int, "+ nameFiled + " Text, " + email + " Text, " +
+        public string creatTable = "Create Table " + tableName + "(" + userId + " int, " + nameFiled + " Text, " + email + " Text, " +
         contact + " Text, " + pass + " Text);";
 
         //complain table
-        public string createTable = "Create Table " + tableComplain + "(" + complain_id + " int, " + complain + " Text," +email+ " Text," +comp_Date+ "Text);";
+        public string createTable = "Create Table " + tableComplain + "(" + complain_id + " int, " + complain + " Text," + email + " Text," + comp_Date + " Text);";
 
-       
+
         //lostand found table
         public string CreateTableLF = "Create Table " + tableLF + "(" + item_id + " int, " + item_name + " Text, " + status + " Text, " +
             item_location + " Text, " + item_des + " Text, " + item_sub + " Text, " + p_email + " Text );";
 
-
-        SQLiteDatabase connectionObj;
        
+
+        //confession table 
+        public string createconTable = "Create Table " + tableConfession + "(" + conf_id + " int, " + confession + " Text," + email + " Text, " + con_Date + " Text);";
+
+        public string createconfavTable = "Create Table " + tableFavConfession + "(" + confession_fav + " Text," + email + " Text, " + confav_Date + " Text);";
+        SQLiteDatabase connectionObj;
+
         public DBHelperClass(Context context) : base(context, name: DBName, factory: null, version: 1)
         {
             myContex = context;
             connectionObj = WritableDatabase;
         }
 
-      
+
         public override void OnCreate(SQLiteDatabase db)
         {
             System.Console.WriteLine("My Create Table STM \n \n" + creatTable);
@@ -82,9 +100,13 @@ namespace StudentFacilityApp
             db.ExecSQL(creatTable);
             db.ExecSQL(createTable);
             db.ExecSQL(CreateTableLF);
+            db.ExecSQL(createconTable);
+            db.ExecSQL(createconfavTable);
+
+
         }
 
-      
+
         //insert data in database
         public void InsertValue(string value_id, string value_username, string value_email, string value_contact, string value_pass)
         {
@@ -101,6 +123,7 @@ namespace StudentFacilityApp
         }
 
        
+
         //insert complaint
         public void InsertmyComplaint(string myid, string myComplaint, string user_email, string dt)
         {
@@ -113,19 +136,20 @@ namespace StudentFacilityApp
             connectionObj.ExecSQL(insertStm);
         }
 
-      
+
         //insert Lost and Found
         public void InsertmyLostFound(string itemID, string item_Name, string item_status, string item_loc, string item_Descr, string itemsub, string user_email)
         {
-           string insertStm = "Insert into " +
-           tableLF + " values (" + itemID + ", '" + item_Name + "'" + "," + "'" + item_status + "'" + "," + "'" + item_loc + "'" + "," + "'" +
-           item_Descr + "'" + "," + "'" + itemsub + "'"+"," + "'" + user_email + "'); ";
+            string insertStm = "Insert into " +
+            tableLF + " values (" + itemID + ", '" + item_Name + "'" + "," + "'" + item_status + "'" + "," + "'" + item_loc + "'" + "," + "'" +
+            item_Descr + "'" + "," + "'" + itemsub + "'" + "," + "'" + user_email + "'); ";
             Console.WriteLine(insertStm);
 
             System.Console.WriteLine("My SQL  Insert STM \n  \n" + insertStm);
 
             connectionObj.ExecSQL(insertStm);
         }
+       
 
         //show data on screen
         public void SelectMydata()
@@ -162,13 +186,13 @@ namespace StudentFacilityApp
         }
         public ICursor SelectMyId()
         {
-            String selectStm = "Select ifnull(max(" + userId + "), 0) as "+ userId + " from " + tableName;
+            String selectStm = "Select ifnull(max(" + userId + "), 0) as " + userId + " from " + tableName;
             ICursor myresut = connectionObj.RawQuery(selectStm, null);
             return myresut;
         }
         public ICursor Validate_LogIn(string email)
         {
-            String selectStm = "Select * from " + tableName + " where email='" + email + "';"; 
+            String selectStm = "Select * from " + tableName + " where email='" + email + "';";
             ICursor myresut = connectionObj.RawQuery(selectStm, null);
 
             return myresut;
@@ -188,7 +212,7 @@ namespace StudentFacilityApp
             return myresut;
         }
         //update complain
-        public ICursor SelectMyDataToUpdate(string id,string complaintxt)
+        public ICursor SelectMyDataToUpdate(string id, string complaintxt)
         {
             String myData = "Update " + tableComplain + " set " + complain + " = '" + complaintxt + "' where c_id = " + id + ";";
             ICursor record = connectionObj.RawQuery(myData, null);
@@ -198,11 +222,11 @@ namespace StudentFacilityApp
             System.Console.WriteLine("My SQL  update STM \n  \n" + record);
 
             //var complaints = record.GetString(record.GetColumnIndexOrThrow("complain"));
-           //System.Console.WriteLine("Name from complain " + complaints);
+            //System.Console.WriteLine("Name from complain " + complaints);
             return record;
         }
-        
-     
+
+
         public void Delete_data(string myid)
         {
             string dltStm = "Delete from " + tableComplain + " where c_id=" + myid + ";";
@@ -234,7 +258,7 @@ namespace StudentFacilityApp
             return record;
         }
         //delete lost and found
-        internal void Delete_myItem(string itemid)
+        public void Delete_myItem(string itemid)
         {
             string dltStm = "Delete from " + tableLF + " where item_ID=" + item_id + ";";
             Console.WriteLine(dltStm);
@@ -279,6 +303,75 @@ namespace StudentFacilityApp
 
             return myresut1;
 
+        }
+        //select confession
+        public ICursor SelectConfession()
+        {
+            String selectStm = "Select * from " + tableConfession+ ";";
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
+
+            return myresut;
+        }
+        //confession select
+        public ICursor SelectConfessionMyId()
+        {
+            String selectStm = "Select ifnull(max(" + conf_id + "), 0) as " + conf_id + " from " + tableConfession;
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
+            return myresut;
+        }
+
+
+        //Insert into mmy confession
+        public void InsertmyConfession(string confid, string confessions, string user_email, string v)
+        {
+            string insertStm = "Insert into " +
+                       tableConfession + " values (" + confid + ", '" + confessions + "'" + "," + "'" + user_email + "'" + "," + "'" + v + "'); ";
+            Console.WriteLine(insertStm);
+
+            System.Console.WriteLine("My SQL  Insert STM \n  \n" + insertStm);
+
+            connectionObj.ExecSQL(insertStm);
+        }
+
+        public ICursor SelectMyConfessionToUpdate(string confid, string confess)
+        {
+            String myCon = "Update " + tableConfession + " set " + confession + " = '" + confess + "' where con_id = " + confid + ";";
+            ICursor record = connectionObj.RawQuery(myCon, null);
+
+            Console.WriteLine(myCon);
+            System.Console.WriteLine("My SQL  update STM \n  \n" + record);
+
+            //var complaints = record.GetString(record.GetColumnIndexOrThrow("complain"));
+            //System.Console.WriteLine("Name from complain " + complaints);
+            return record;
+        }
+        //delete confession
+        public void Delete_condata(string ccid)
+        {
+            string dltStm = "Delete from " + tableConfession + " where con_id=" + ccid + ";";
+            Console.WriteLine(dltStm);
+            System.Console.WriteLine("My SQL  delete STM \n  \n" + dltStm);
+            connectionObj.ExecSQL(dltStm);
+        }
+        //fav confession
+        //insert favorite
+        public void insertFavoriteCon( string conf, string emailValue, string date)
+        {
+            string insertStm = "Insert into " +
+                                   tableFavConfession + " values ('" + conf + "'" + "," + "'" + emailValue + "'" + "," + "'" + date + "'); ";
+            Console.WriteLine(insertStm);
+
+            System.Console.WriteLine("My SQL  Insert STM \n  \n" + insertStm);
+
+            connectionObj.ExecSQL(insertStm);
+        }
+
+        public ICursor SelectFavConfession(string valueFromLoginUser)
+        {
+            String selectStm = "Select * from " + tableFavConfession + " where email='" + valueFromLoginUser + "';";
+            ICursor myresut = connectionObj.RawQuery(selectStm, null);
+
+            return myresut;
         }
 
 

@@ -21,7 +21,7 @@
         
         android:layout_height="40dp"
         android:layout_width="30dp"
-        android:id="@+id/spinner3"
+        android:id="@+id/spinners"
 		android:background="@drawable/list"
 	    android:gravity="left"
 		
@@ -123,5 +123,20 @@
 		android:padding="5dp"
         
     />
-
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="30dp"
+	android:orientation="vertical"
+	android:gravity="center_horizontal"
+    android:background="#01d"
+		>
+<ImageView
+		android:layout_height="60dp"
+		android:layout_width="60dp"
+		android:id="@+id/imageeye"
+		android:gravity="left"
+		android:background="#000"
+		android:clickable="true"
+		/>
+		</LinearLayout>
 	</LinearLayout>
