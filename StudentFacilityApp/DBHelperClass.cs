@@ -84,6 +84,7 @@ namespace StudentFacilityApp
         public string createconTable = "Create Table " + tableConfession + "(" + conf_id + " int, " + confession + " Text," + email + " Text, " + con_Date + " Text);";
 
         public string createconfavTable = "Create Table " + tableFavConfession + "(" + confession_fav + " Text," + email + " Text, " + confav_Date + " Text);";
+
         SQLiteDatabase connectionObj;
 
         public DBHelperClass(Context context) : base(context, name: DBName, factory: null, version: 1)
@@ -289,7 +290,7 @@ namespace StudentFacilityApp
         //select complain on welcome
         public ICursor Selectcomplain()
         {
-            String selectStm = "Select * from " + tableComplain + ";";
+            String selectStm = "Select * from " + tableComplain + " ORDER BY " + complain + " DESC ;";
             ICursor myresut = connectionObj.RawQuery(selectStm, null);
 
             return myresut;

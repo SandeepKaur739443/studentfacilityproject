@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Text.RegularExpressions;
 using Android.App;
 using Android.Content;
 using Android.Database;
@@ -50,7 +50,7 @@ namespace StudentFacilityApp
             cr.MoveToFirst();
             myid.Text = (cr.GetInt(cr.GetColumnIndex("id"))+1).ToString();
             reg_confirmpasswd.TextChanged += check_password;
-
+            reg_email.TextChanged += login;
             //email validation
 
             RegSignUpBtn.Click += delegate
@@ -105,10 +105,22 @@ namespace StudentFacilityApp
                 RegSignUpBtn.Enabled = true;
             }
         }
-
+        private void login(object sender, TextChangedEventArgs e)
+        {
+            if(reg_email.Text.Contains("@") && reg_email.Text.Contains("."))
+            {
+                Console.WriteLine("Valid Email");
+            }
+            else
+            {
+                reg_email.Error = "Invalid email Patteren";
+            }
+        }
+        //validate string 
+       
         private void alertOKButton(object sender, DialogClickEventArgs e)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("you pressed ok button");
         }
     }
 }

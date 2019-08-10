@@ -28,7 +28,7 @@ namespace StudentFacilityApp
         string date;
         ICursor cn;
 
-        List<ConfessionUserObj> myUsersList = new List<ConfessionUserObj>();
+        List<ConfessionUserObj> UsersList = new List<ConfessionUserObj>();
 
       //  public static string emailValue = "email";
         private Android.App.AlertDialog.Builder alert;
@@ -52,7 +52,7 @@ namespace StudentFacilityApp
                 do
                 {
                     string cfid = cs.GetString(cs.GetColumnIndexOrThrow("con_id"));
-                    myUsersList.Add(new ConfessionUserObj(cs.GetString(cs.GetColumnIndexOrThrow("my_confession")), cs.GetString(cs.GetColumnIndexOrThrow("Confession_date"))));
+                    UsersList.Add(new ConfessionUserObj(cs.GetString(cs.GetColumnIndexOrThrow("my_confession")), cs.GetString(cs.GetColumnIndexOrThrow("Confession_date"))));
                 
                 }
 
@@ -63,7 +63,7 @@ namespace StudentFacilityApp
                 }
                 cs.Close();
                 // custom adapton code added
-                ConfessionAdapterList myAdapter = new ConfessionAdapterList(this, myUsersList);
+                ConfessionAdapterList myAdapter = new ConfessionAdapterList(this, UsersList);
                 list1.Adapter = myAdapter;
                 list1.ItemClick += Lv1_ItemClick;
                 sr1.QueryTextChange += Sv1_QueryTextChange;
@@ -73,12 +73,12 @@ namespace StudentFacilityApp
         private void Lv1_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             var index = e.Position;
-            var myvalue = myUsersList[index];
+            var myvalue = UsersList[index];
             alert = new Android.App.AlertDialog.Builder(this);
-            alert.SetTitle("Error");
-            alert.SetMessage("Please Enter Valid Data");
+            alert.SetTitle("Favorite");
+            alert.SetMessage("Do you like It?");
             alert.SetPositiveButton("Yes", alertOKButton);
-            alert.SetNegativeButton("No", alertOKButton);
+            alert.SetNegativeButton("No", alertCancelButton);
             Dialog myDialog = alert.Create();
             myDialog.Show();
             // Intent newScreen = new Intent(this, typeof(FavoriteConfessionList));
@@ -95,10 +95,15 @@ namespace StudentFacilityApp
             myDB.insertFavoriteCon( conf, emailPrint, date);
            
             Intent newScreen = new Intent(this, typeof(FavoriteConfessionList));
-            newScreen.PutExtra("email", emailPrint);
+            GlobalClass.Setemail(emailPrint);
             //newScreen.PutExtra("date", myvalue.date);
             StartActivity(newScreen);
 
+
+        }
+        private void alertCancelButton(object sender, DialogClickEventArgs e)
+        {
+            
 
         }
 
@@ -106,12 +111,12 @@ namespace StudentFacilityApp
         {
             if (string.IsNullOrWhiteSpace(e.NewText))
             {
-                ConfessionAdapterList myAdapter = new ConfessionAdapterList(this, myUsersList);
+                ConfessionAdapterList myAdapter = new ConfessionAdapterList(this, UsersList);
                 list1.Adapter = myAdapter;
             }
             else
             {
-                ConfessionAdapterList myAdapter = new ConfessionAdapterList(this, myUsersList.Where(us => us.name.StartsWith(e.NewText)).ToList());
+                ConfessionAdapterList myAdapter = new ConfessionAdapterList(this, UsersList.Where(us => us.name.StartsWith(e.NewText)).ToList());
                 list1.Adapter = myAdapter;
             }
 

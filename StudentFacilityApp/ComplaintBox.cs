@@ -33,7 +33,7 @@ namespace StudentFacilityApp
         private string Update;
         Spinner spinnerView;
         Toolbar toolb;
-        string[] myCategory = { "MENU", "Complaint Box", "Lost & Found", "Confessions" };
+        string[] myCategory = { "MENU", "Welcome", "Lost & Found", "Confessions" };
         TextView myUser;
         String valueFromLoginUser;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -58,7 +58,7 @@ namespace StudentFacilityApp
             // Create your application here
             myDB = new DBHelperClass(this);
 
-            user_email = Intent.GetStringExtra("email");
+            // user_email = Intent.GetStringExtra("email");
             myAddBtn = FindViewById<Button>(Resource.Id.AddBtn);
             myEditBtn = FindViewById<Button>(Resource.Id.EditBtn);
             myDelBtn = FindViewById<Button>(Resource.Id.DelBtn);
@@ -126,21 +126,23 @@ namespace StudentFacilityApp
             System.Console.WriteLine("value is " + value);
 
 
-            if (value.Equals("Complaint Box"))
+            if (value.Equals("WelcomeScreen"))
             {
                 //create a veg array and create as a new adater 
-                Android.Content.Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                Android.Content.Intent newScreen = new Intent(this, typeof(WelcomeScreen));
                 newScreen.PutExtra("email", valueFromLoginUser);
                 StartActivity(newScreen);
             }
             else if (value.Equals("Lost & Found"))
             {
-                Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                Intent newScreen = new Intent(this, typeof(LostandFound));
+                newScreen.PutExtra("email", valueFromLoginUser);
                 StartActivity(newScreen);
             }
             else if (value.Equals("Confessions"))
             {
-                Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                Intent newScreen = new Intent(this, typeof(MyConfession));
+                newScreen.PutExtra("email", valueFromLoginUser);
                 StartActivity(newScreen);
             }
         }

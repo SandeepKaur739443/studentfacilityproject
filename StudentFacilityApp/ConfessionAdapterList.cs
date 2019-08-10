@@ -51,12 +51,13 @@ namespace StudentFacilityApp
 
             if (myView == null)
             {
-                myView = mycontext.LayoutInflater.Inflate(Resource.Layout.CellLayout, null);
+                myView = mycontext.LayoutInflater.Inflate(Resource.Layout.favcell, null);
             }
 
             myView.FindViewById<TextView>(Resource.Id.nameID).Text = myObj.name;
             myView.FindViewById<TextView>(Resource.Id.ageID).Text = myObj.date;
-           // myView.FindViewById<ImageView>(Resource.Id.userImageId).SetImageResource(myObj.image);
+            
+           
             return myView;
         }
     }

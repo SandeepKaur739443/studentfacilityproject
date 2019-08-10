@@ -57,9 +57,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComplaintBox.cs" />
+    <Compile Include="ConfessionAdapterList.cs" />
+    <Compile Include="ConfessionUserObj.cs" />
     <Compile Include="CustomAdapter.cs" />
     <Compile Include="DBHelperClass.cs" />
+    <Compile Include="FavoriteConfessionList.cs" />
     <Compile Include="Fragment1.cs" />
+    <Compile Include="Fragment2.cs" />
+    <Compile Include="GlobalClass.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="LostandFound.cs" />
     <Compile Include="MyConfession.cs" />
@@ -72,6 +77,7 @@
     <Compile Include="SignUp.cs" />
     <Compile Include="UserObject.cs" />
     <Compile Include="UserViewListOb.cs" />
+    <Compile Include="ViewConfessionList.cs" />
     <Compile Include="ViewPagerAdapter.cs" />
     <Compile Include="ViewItemsLF.cs" />
     <Compile Include="WelcomeScreen.cs" />
@@ -179,15 +185,42 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\google_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\selectItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\confession.axml">
+    <AndroidResource Include="Resources\layout\MyConfessions.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ViewConfession.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\e.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\FavConfessionList.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Id.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\wallet.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\watch.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\favcell.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

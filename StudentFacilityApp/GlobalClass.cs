@@ -12,19 +12,17 @@ using Android.Widget;
 
 namespace StudentFacilityApp
 {
-    class ConfessionUserObj
+    class GlobalClass
     {
-        public String name;
-        public string date;
-       
-
-
-        public ConfessionUserObj(string nameInfo, string dateInfo)
+        private static string mainemail;
+        public static void Setemail(string emailid)
         {
-            name = nameInfo;
-            date = dateInfo;
-            
+            mainemail = emailid;
 
+        }
+        public static string GetEmail()
+        {
+            return mainemail;
         }
     }
 }

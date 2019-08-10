@@ -52,45 +52,56 @@ namespace StudentFacilityApp
             myLoginbtn.Click += delegate
             {
                 
-                var myName = myUserName.Text;
-                var myPassword = myUserPasswd.Text;
+                if(myUserName.Equals("") || myUserPasswd.Equals(""))
+                {
+                    alert.SetTitle("Error");
+                    alert.SetMessage("Please Enter Valid Data");
+                    alert.SetPositiveButton("OK", alertOKButton);
+                    alert.SetNegativeButton("Cancel", alertOKButton);
 
-                string userValue = myUserName.Text.ToString();
-                var showResult = FindViewById<TextView>(Resource.Id.emailResult);
-                var emailLoginResult = isValidEmail(userValue);
+                    Dialog myDialog = alert.Create();
 
-                System.Console.WriteLine("Username: ---- > " + myName);
-                System.Console.WriteLine("Password: ---- > " + myPassword);
+                    myDialog.Show();
+                }
+                else
+                {
+                    var email = myUserName.Text;
+                    var myPassword = myUserPasswd.Text;
 
-                myUserName.Error = "Plase enter Email Id";
+                    string userValue = myUserName.Text.ToString();
+                    var showResult = FindViewById<TextView>(Resource.Id.emailResult);
+                    var emailLoginResult = isValidEmail(userValue);
 
-                c_login = myDB.Validate_LogIn(myUserName.Text);
-                c_login.MoveToFirst();
-               
-               
-                //showResult.Text = "Please enter Email Id";
-                
-               
+                    System.Console.WriteLine("Username: ---- > " + email);
+                    System.Console.WriteLine("Password: ---- > " + myPassword);
+
+                    //myUserName.Error = "Plase enter Email Id";
+
+                    c_login = myDB.Validate_LogIn(myUserName.Text);
+                    c_login.MoveToFirst();
+
+
                     var uname = c_login.GetString(c_login.GetColumnIndexOrThrow("email"));
                     var upass = c_login.GetString(c_login.GetColumnIndexOrThrow("password"));
-                    if ( uname == myUserName.Text && myUserPasswd.Text == upass)
+                    if (uname == myUserName.Text && myUserPasswd.Text == upass)
 
                     {
-                        //myDB.SelectMydata();
+                        
                         Intent newScreen = new Intent(this, typeof(WelcomeScreen));
-                        newScreen.PutExtra("userName", myName);
+                        GlobalClass.Setemail(email);
                         StartActivity(newScreen);
                     }
 
                     else
                     {
-                    alert.SetTitle("Error");
-                    alert.SetMessage("Please Enter Valid Data");
-                    alert.SetPositiveButton("OK", alertOKButton);
-                    alert.SetNegativeButton("Cancel", alertOKButton);
-                    Dialog myDialog = alert.Create();
-                    myDialog.Show();
+                        alert.SetTitle("Error");
+                        alert.SetMessage("Please Enter Valid Data");
+                        alert.SetPositiveButton("OK", alertOKButton);
+                        alert.SetNegativeButton("Cancel", alertOKButton);
+                        Dialog myDialog = alert.Create();
+                        myDialog.Show();
 
+                    }
                 }
                 
                 };

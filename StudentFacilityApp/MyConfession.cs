@@ -35,6 +35,7 @@ namespace StudentFacilityApp
         TextView myUser;
         String valueFromLoginUser;
         ImageView eye;
+        string emailPrint;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -53,7 +54,7 @@ namespace StudentFacilityApp
 
             // Create your application here
             myDB = new DBHelperClass(this);
-
+            emailPrint = Intent.GetStringExtra("email");
             user_email = Intent.GetStringExtra("email");
             myAddBtn = FindViewById<Button>(Resource.Id.AddConBtn);
             myEditBtn = FindViewById<Button>(Resource.Id.EditConBtn);
@@ -130,7 +131,14 @@ namespace StudentFacilityApp
             System.Console.WriteLine("value is " + value);
 
 
-            if (value.Equals("Complaint Box"))
+             if (value.Equals("Welcome"))
+            {
+                Intent newScreen = new Intent(this, typeof(WelcomeScreen));
+                newScreen.PutExtra("email", valueFromLoginUser);
+                //GlobalClass.Setemail(emailPrint);
+                StartActivity(newScreen);
+            }
+            else if (value.Equals("Complaint Box"))
             {
                 //create a veg array and create as a new adater 
                 Android.Content.Intent newScreen = new Intent(this, typeof(ComplaintBox));
@@ -139,14 +147,12 @@ namespace StudentFacilityApp
             }
             else if (value.Equals("Lost & Found"))
             {
-                Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                Intent newScreen = new Intent(this, typeof(LostandFound));
+                newScreen.PutExtra("email", valueFromLoginUser);
+
                 StartActivity(newScreen);
             }
-            else if (value.Equals("Confessions"))
-            {
-                Intent newScreen = new Intent(this, typeof(ComplaintBox));
-                StartActivity(newScreen);
-            }
+           
         }
         public override bool OnCreateOptionsMenu(IMenu menu)
         {

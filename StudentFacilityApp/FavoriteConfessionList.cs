@@ -25,34 +25,35 @@ namespace StudentFacilityApp
         string conff;
         string email;
         string dates;
-        List<ConfessionUserObj> myUsersList = new List<ConfessionUserObj>();
+        ListView l2;
+        List<ConfessionUserObj> UsersList = new List<ConfessionUserObj>();
+        ConfessionAdapterList myAdapters;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.FavConfessionList);
-            valueFromLoginUser = Intent.GetStringExtra("email");
+            list2 = FindViewById<ListView>(Resource.Id.conlist);
+           // l2 = FindViewById<ListView>(Resource.Id.conDate);
+            valueFromLoginUser = GlobalClass.GetEmail();
+            myDB = new DBHelperClass(this);
+          
             cr = myDB.SelectFavConfession(valueFromLoginUser);
             cr.MoveToFirst();
             // mypid.Text = cr.GetString(cr.GetColumnIndexOrThrow("id"));
-            if (cr.MoveToFirst())
+            while (cr.MoveToNext())
             {
-                do
-                {
-                    myUsersList.Add(new ConfessionUserObj(cr.GetString(cr.GetColumnIndexOrThrow("fav_confession")), cr.GetString(cr.GetColumnIndexOrThrow("Confession_date"))));
-                }
-
-                while (cr.MoveToNext());
-                {
-
-
-                }
-                cr.Close();
+                var a = cr.GetString(cr.GetColumnIndexOrThrow("fav_confession"));
+                var b = cr.GetString(cr.GetColumnIndexOrThrow("Confessionfav_date"));
+                UsersList.Add(new ConfessionUserObj(a, b));
+               
+            }
+               
                 // custom adapton code added
-                ConfessionAdapterList myAdapter = new ConfessionAdapterList(this, myUsersList);
-                list2.Adapter = myAdapter;
+                myAdapters = new ConfessionAdapterList(this, UsersList);
+                list2.Adapter = myAdapters;
                 
             }
         }
     }
-}
+

@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+	android:background="#fff">
 	<android.support.v7.widget.Toolbar 
    
     android:id="@+id/my_toolbar"
@@ -31,7 +32,7 @@
 			android:background="#34C3DB"
 			android:textColor="#fff"
 			android:layout_marginLeft="40dp"
-			android:textSize="25dp"
+			android:textSize="20dp"
 			/>
 
 </android.support.v7.widget.Toolbar>

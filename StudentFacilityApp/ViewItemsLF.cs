@@ -81,24 +81,7 @@ namespace StudentFacilityApp
 
         private void Sv1_QueryTextChange(object sender, SearchView.QueryTextChangeEventArgs e)
         {
-            // Searchview after custom adaptor
-            /*  UserObject myobj;
-              List<UserObject> myList = new List<UserObject>();
-              var mySearchValue = e.NewText;
-
-              System.Console.WriteLine("Search Text is :  is \n\n " + mySearchValue);
-              for(int i=0; i< myUsersList.Count;i++)
-              {
-                  myobj = myUsersList[i];
-                  if (myobj.name.ToLower().Contains(mySearchValue))
-                  {
-                      System.Console.WriteLine("yes you did it");
-                      myList.Add(myUsersList[i]);
-                  }
-              }
-              MyCustomAdapterList myAdapter = new MyCustomAdapterList(this, myList);
-              lv1.Adapter = myAdapter; */
-
+            
             if (string.IsNullOrWhiteSpace(e.NewText))
             {
                 MyCustomAdapterList myAdapter = new MyCustomAdapterList(this, myUsersList);

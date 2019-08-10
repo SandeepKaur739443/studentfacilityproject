@@ -37,7 +37,7 @@ namespace StudentFacilityApp
         List<UserObject> myusersList = new List<UserObject>();
         MyCustomAdapter myAdapter;
 
-
+        string emailPrint;
         protected override void OnCreate(Bundle savedInstanceState)
         {
 
@@ -47,50 +47,23 @@ namespace StudentFacilityApp
             SetContentView(Resource.Layout.WelcomeScreen);
             myDB = new DBHelperClass(this);
 
+            valueFromLoginUser = GlobalClass.GetEmail();
 
-
-            /* myDB.SelectComplaintList();
-             cursor = myDB.SelectComplaintList();
-             cursor.MoveToFirst();
-             while(cursor.MoveToNext())
-             {
-
-
-             }*/
             mytextcomp = FindViewById<TextView>(Resource.Id.mycomp);
-          /*  myDB.Selectcomplain();
-            ICursor cur = myDB.Selectcomplain();
-            cur.MoveToFirst();
-            if (cur.MoveToFirst())
-            {
-                do
-                {
-                    string image = cur.GetString(cur.GetColumnIndexOrThrow("item_sub"));
-                    int im = Convert.ToInt32(image);
-                    myusersList.Add(new UserObject("myDB.Selectcomplain();","myDB.Selectcomplain();",im));
-                }
+          
+            toolb = FindViewById<Toolbar>(Resource.Id.my_toolbar);
 
-                while (cur.MoveToNext());
-                {
+             SetSupportActionBar(toolb);
+             spinnerView = FindViewById<Spinner>(Resource.Id.spinner1);
 
-
-                }
-                cur.Close(); */
-                // lv1 = FindViewById<ListView>(Resource.Id.listView1);
-                var myAdatper = new MyCustomAdapter(this, myusersList);
-                //lv1.Adapter = myAdapter;
-                toolb = FindViewById<Toolbar>(Resource.Id.my_toolbar);
-
-                SetSupportActionBar(toolb);
-                spinnerView = FindViewById<Spinner>(Resource.Id.spinner1);
-
-                spinnerView.Adapter = new ArrayAdapter
+             spinnerView.Adapter = new ArrayAdapter
                     (this, Android.Resource.Layout.SimpleListItem1, myCategory);
 
-                valueFromLoginUser = Intent.GetStringExtra("userName");
+              //  valueFromLoginUser = Intent.GetStringExtra("userName");
                 myUser = FindViewById<TextView>(Resource.Id.welcomeuser);
                 myUser.Text = "Welcome," + valueFromLoginUser;
-                // this.Title = "welcome admin";
+
+               
                 spinnerView.ItemSelected += MyItemSelectedMethod;
 
                 InitializeTabs();
@@ -118,7 +91,8 @@ namespace StudentFacilityApp
             {
                 //create a veg array and create as a new adater 
                 Android.Content.Intent newScreen = new Intent(this, typeof(ComplaintBox));
-                newScreen.PutExtra("email", valueFromLoginUser);
+                 newScreen.PutExtra("email", valueFromLoginUser);
+              //  GlobalClass.Setemail(emailPrint);
                 StartActivity(newScreen);
             }
             else if (value.Equals("Lost & Found"))
@@ -142,7 +116,7 @@ namespace StudentFacilityApp
 
                 _fragments = new Fragment[] {
                  new Fragment1(this),
-               // new Fragment2(),
+                new Fragment2(this),
                // new Fragment1(),
                 //new Fragment2()
             };

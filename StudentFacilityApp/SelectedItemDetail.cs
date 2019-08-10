@@ -28,19 +28,19 @@ namespace StudentFacilityApp
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.selectItem);
-            Iname = FindViewById<TextView>(Resource.Id.TextItemName);
-            idesc = FindViewById<TextView>(Resource.Id.TextItemdesc);
-            iemail = FindViewById<TextView>(Resource.Id.TextItemeEmail);
-            II =FindViewById<ImageView>(Resource.Id.im);
+            Iname = FindViewById<TextView>(Resource.Id.itmNme);
+            idesc = FindViewById<TextView>(Resource.Id.desc);
+            iemail = FindViewById<TextView>(Resource.Id.PEmail);
+            II =FindViewById<ImageView>(Resource.Id.img);
 
             valueList = Intent.GetStringExtra("name");
             v1 = Intent.GetStringExtra("desc");
             v2 = Intent.GetStringExtra("email");
             v3 = Convert.ToInt32(Intent.GetStringExtra("image"));
             // myUser = FindViewById<TextView>(Resource.Id.welcomeuser);
-            Iname.Text = "Welcome," + valueList;
-            idesc.Text = "Welcome," + v1;
-            iemail.Text= "jhhj," +v2;
+            Iname.Text = valueList;
+            idesc.Text =  v2;
+            iemail.Text=  v1;
             II.SetImageResource(v3);
             // Create your application here
         }

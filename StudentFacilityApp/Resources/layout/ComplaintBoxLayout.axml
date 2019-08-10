@@ -34,7 +34,7 @@
 			android:background="#34C3DB"
 			android:textColor="#fff"
 			android:layout_marginLeft="40dp"
-			android:textSize="25dp"
+			android:textSize="20dp"
 			/>
 
 </android.support.v7.widget.Toolbar>

@@ -34,7 +34,7 @@
 			android:background="#34C3DB"
 			android:textColor="#fff"
 			android:layout_marginLeft="40dp"
-			android:textSize="25dp"
+			android:textSize="20dp"
 			/>
 
 </android.support.v7.widget.Toolbar>
@@ -127,16 +127,15 @@
 	android:layout_width="fill_parent"
 	android:layout_height="30dp"
 	android:orientation="vertical"
-	android:gravity="center_horizontal"
-    android:background="#01d"
+	android:gravity="right"
+    
 		>
 <ImageView
-		android:layout_height="60dp"
-		android:layout_width="60dp"
+		android:layout_height="40dp"
+		android:layout_width="100dp"
 		android:id="@+id/imageeye"
-		android:gravity="left"
-		android:background="#000"
 		android:clickable="true"
-		/>
+		android:src="@drawable/ar"
+				/>
 		</LinearLayout>
 	</LinearLayout>

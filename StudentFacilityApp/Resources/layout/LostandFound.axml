@@ -32,7 +32,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 			android:background="#34C3DB"
 			android:textColor="#fff"
 			android:layout_marginLeft="40dp"
-			android:textSize="25dp"
+			android:textSize="20dp"
 			/>
 
 </android.support.v7.widget.Toolbar>
@@ -180,7 +180,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/view"
         android:text="view"
         android:textColor="#fff"
-        android:layout_marginRight="10dp"
+        
         android:layout_marginTop="10dp"
         android:background="#34C3CD"
         android:padding="7dp"

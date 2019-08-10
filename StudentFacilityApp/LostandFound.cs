@@ -35,7 +35,7 @@ namespace StudentFacilityApp
         string[] myCategory = { "MENU", "Welcome", "Complaint Box", "Confessions" };
         TextView myUser;
         String valueFromLoginUser;
-        string[] Item_cat = { "Select Item Category", "Bag", "Student Card", "Accessory" };
+        string[] Item_cat = { "Select Item Category", "Bag", "Student Card", "Accessories" };
         string image;
         Button btn_View;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -131,11 +131,14 @@ namespace StudentFacilityApp
                     break;
 
                 case 1:
-                    image = Convert.ToString(Resource.Drawable.p);
+                    image = Convert.ToString(Resource.Drawable.wallet);
                     break;
 
                 case 2:
-                    image = Convert.ToString(Resource.Drawable.LC);
+                    image = Convert.ToString(Resource.Drawable.Id);
+                    break;
+                case 3:
+                    image = Convert.ToString(Resource.Drawable.watch);
                     break;
 
             }
@@ -167,7 +170,9 @@ namespace StudentFacilityApp
             }
             else if (value.Equals("Confessions"))
             {
-                Intent newScreen = new Intent(this, typeof(ComplaintBox));
+                Intent newScreen = new Intent(this, typeof(MyConfession));
+                newScreen.PutExtra("email", valueFromLoginUser);
+
                 StartActivity(newScreen);
             }
         }
